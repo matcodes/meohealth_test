@@ -21,11 +21,33 @@ A robust and efficient REST API built with TypeScript and Express.js for checkin
 - Input validation and sanitization
 - Error handling that doesn't expose sensitive information
 
+### Health Monitoring
+- Health check endpoint for service status monitoring
+- Liveness probe for container orchestration platforms
+- Real-time service availability status
+
 ## API Endpoints
+
+### Health Check Endpoints
+
+#### Service Health Check
+```
+GET /api/v1/health/check
+```
+Returns the overall health status of the service.
+
+#### Liveness Probe
+```
+GET /api/v1/health/liveness
+```
+Endpoint for container orchestration platforms to monitor service liveness.
+
+### API Versioning
+All endpoints are versioned with a prefix `/api/v1/` to ensure backward compatibility as the API evolves.
 
 ### Check Prime Number
 ```
-GET /api/is-prime?number={number}
+GET /api/v1/prime/check?number={number}
 ```
 
 #### Request
@@ -44,7 +66,7 @@ GET /api/is-prime?number={number}
   "meta": {
     "timestamp": "2023-11-21T12:00:00Z",
     "requestId": "abc-123",
-    "path": "/api/is-prime"
+    "path": "/api/v1/prime/check"
   }
 }
 ```
@@ -60,7 +82,7 @@ GET /api/is-prime?number={number}
   "meta": {
     "timestamp": "2023-11-21T12:00:00Z",
     "requestId": "abc-123",
-    "path": "/api/is-prime"
+    "path": "/api/v1/prime/check"
   }
 }
 ```
@@ -124,12 +146,12 @@ npm start
 ### Testing the API
 Test the endpoint using curl:
 ```bash
-curl "http://localhost:3000/api/is-prime?number=17"
+curl "http://localhost:3000/api/v1/prime/check?number=17"
 ```
 
 Or using your preferred API client (like Postman):
 ```
-GET http://localhost:3000/api/is-prime?number=17
+GET http://localhost:3000/api/v1/prime/check?number=17
 ```
 
 ## Error Codes
