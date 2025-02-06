@@ -1,18 +1,14 @@
-import { Request, Response, NextFunction } from 'express';
+import { query } from 'express-validator';
 
-export const validateNumberParam = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const num = Number(req.query.number);
-  
-  if (!Number.isInteger(num) || num < 2) {
-    return res.status(400).json({
-      success: false,
-      error: 'Please provide a valid integer greater than 1'
-    });
-  }
-  
-  next();
-};
+export const validatePrimeInput = [
+  query('number')
+    .isString()
+    .withMessage('Number must be a string representation')
+    .bail()
+    .custom((value) => {
+      if (!/^-?\d+$/.test(value)) throw new Error('Invalid numeric format');
+      const num = BigInt(value);
+      if (num <= 1n) throw new Error('Number must be greater than 1');
+      return true;
+    })
+];
