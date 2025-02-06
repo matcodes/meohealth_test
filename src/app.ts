@@ -1,6 +1,7 @@
 import express from "express";
 import helmet from "helmet";
-import isPrimeRouter from "./routes/is-prime.route";
+import isPrimeRouter from "./routes/prime.route";
+import healthRouter from "./routes/health.route";
 import { errorHandler } from "./middleware/error.middleware";
 import { apiLimiter } from "./config/rateLimit.config";
 
@@ -16,8 +17,12 @@ app.use(express.urlencoded({ extended: true }));
 // Rate limiting
 app.use("/api/", apiLimiter);
 
+// API Version prefix
+const API_VERSION = "v1";
+
 // Routes
-app.use("/api", isPrimeRouter);
+app.use(`/api/${API_VERSION}/prime`, isPrimeRouter);
+app.use(`/api/${API_VERSION}/health`, healthRouter);
 
 // Error handling
 app.use(errorHandler);
