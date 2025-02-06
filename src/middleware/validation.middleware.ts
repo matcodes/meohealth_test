@@ -1,14 +1,23 @@
-import { query } from 'express-validator';
+import { Request, Response, NextFunction } from "express";
 
-export const validatePrimeInput = [
-  query('number')
-    .isString()
-    .withMessage('Number must be a string representation')
-    .bail()
-    .custom((value) => {
-      if (!/^-?\d+$/.test(value)) throw new Error('Invalid numeric format');
-      const num = BigInt(value);
-      if (num <= 1n) throw new Error('Number must be greater than 1');
-      return true;
-    })
-];
+export interface PrimeRequest extends Request {
+  query: {
+    number: string;
+  };
+}
+
+export const validatePrimeInput = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { number } = req.query;
+  if (!number || typeof number !== "string") {
+    return res.status(400).json({
+      status: "error",
+      message: 'Invalid or missing "number" query parameter.',
+    });
+  }
+  (req as PrimeRequest).query.number = number;
+  next();
+};
