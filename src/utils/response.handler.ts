@@ -6,13 +6,11 @@ export class ResponseHandler {
     req: Request,
     res: Response,
     type: string,
-    id: string,
     result: T
   ): void {
     const response: ApiResponse<T> = {
       data: {
         type,
-        id,
         attributes: {
           result,
         },

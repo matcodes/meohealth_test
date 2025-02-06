@@ -1,7 +1,6 @@
 export interface ApiResponse<T = boolean> {
   data?: {
     type: string;
-    id: string;
     attributes: {
       result: T;
     };

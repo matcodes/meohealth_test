@@ -58,8 +58,8 @@ GET /api/v1/prime/check?number={number}
 {
   "data": {
     "type": "prime-check",
-    "id": "123",
     "attributes": {
+      "number": "2147483647",
       "result": true
     }
   },
